@@ -1,0 +1,80 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries, localePath } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const news = (await getLocaleEntries('news', locale)).sort((a, b) => +b.data.date - +a.data.date);
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'news.title')}</h2>
+  <ol class="timeline">
+    {news.map((n) => (
+      <li class="item">
+        <time class="item__date" datetime={n.data.date.toISOString().slice(0, 10)}>
+          {n.data.date.toISOString().slice(0, 10)}
+        </time>
+        <div class="item__body">
+          <a class="item__title" href={localePath(locale, `/news/${n.slug}/`)}>
+            {locale === 'zh' ? n.data.title : n.data.titleEn}
+          </a>
+          {n.data.tags.length > 0 && (
+            <p class="item__tags">{n.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p>
+          )}
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xl);
+  }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .item {
+    display: grid;
+    grid-template-columns: 7.5em minmax(0, 1fr);
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  @media (max-width: 640px) {
+    .item {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-3xs);
+    }
+  }
+  .item__date {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.35em;
+  }
+  .item__title {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.5;
+  }
+  .item__title:hover {
+    color: var(--color-accent-ink);
+  }
+  .item__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: var(--space-2xs) 0 0;
+  }
+</style>

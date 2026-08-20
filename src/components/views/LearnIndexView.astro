@@ -1,0 +1,151 @@
+---
+import { t, type Locale, type UiKey } from '../../i18n/ui';
+import { getLocaleEntries, localePath } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const resources = (await getLocaleEntries('resources', locale)).sort((a, b) => a.data.order - b.data.order);
+const cats: Array<{ key: UiKey; values: string[] }> = [
+  { key: 'learn.cat.course', values: ['course'] },
+  { key: 'learn.cat.setup', values: ['setup'] },
+  { key: 'learn.cat.tutorial', values: ['tutorial'] },
+  { key: 'learn.cat.practice', values: ['practice'] },
+  { key: 'learn.cat.domain', values: ['domain'] },
+  { key: 'learn.cat.link', values: ['link'] },
+];
+const levelLabel = (v?: string) => (v ? (t(locale, `learn.level.${v}` as UiKey) as string) : '');
+const langLabel = (v?: string) => (v ? (t(locale, `learn.lang.${v}` as UiKey) as string) : '');
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'nav.learn')}</h2>
+  <p class="page-intro">{t(locale, 'learn.intro')}</p>
+
+  {cats.map(({ key, values }) => {
+    const list = resources.filter((r) => values.includes(r.data.category));
+    if (list.length === 0) return null;
+    return (
+      <section class="cat">
+        <h3 class="cat__label">{t(locale, key)} <span class="cat__count">{list.length}</span></h3>
+        <ul class="rows">
+          {list.map((r) => {
+            const isExternal = Boolean(r.data.externalUrl);
+            const title = locale === 'zh' ? r.data.title : r.data.titleEn;
+            return (
+              <li class="row">
+                <div class="row__main">
+                  {isExternal ? (
+                    <a class="row__title" href={r.data.externalUrl} rel="noopener" target="_blank">
+                      {title} <span class="row__arrow" aria-hidden="true">↗</span>
+                    </a>
+                  ) : (
+                    <a class="row__title" href={localePath(locale, `/learn/${r.slug}/`)}>
+                      {title}
+                      {r.data.placeholder && <span class="badge-tbd">{t(locale, 'common.example')}</span>}
+                    </a>
+                  )}
+                  {r.data.summary && <p class="row__summary">{r.data.summary}</p>}
+                </div>
+                <p class="row__chips">
+                  {r.data.level && <span class="chip chip--level">{levelLabel(r.data.level)}</span>}
+                  {r.data.language && <span class="chip">{langLabel(r.data.language)}</span>}
+                  {r.data.tags.map((tag) => <span class="chip">{tag}</span>)}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    );
+  })}
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xs);
+  }
+  .page-intro {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-xl);
+    max-width: var(--measure);
+  }
+  .cat + .cat {
+    margin-top: var(--space-xl);
+  }
+  .cat__label {
+    font-size: var(--text-md);
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-sm);
+  }
+  .cat__count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-accent-ink);
+    margin-inline-start: var(--space-2xs);
+  }
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+    align-items: start;
+  }
+  @media (max-width: 767px) {
+    .row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xs);
+    }
+  }
+  .row__title {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.5;
+  }
+  .row__title:hover {
+    color: var(--color-accent-ink);
+  }
+  .row__arrow {
+    font-size: 0.8em;
+    color: var(--color-muted);
+  }
+  .badge-tbd {
+    vertical-align: 0.15em;
+    margin-inline-start: var(--space-2xs);
+  }
+  .row__summary {
+    margin: var(--space-3xs) 0 0;
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    max-width: var(--measure);
+  }
+  .row__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: 0;
+    justify-content: flex-end;
+  }
+  @media (max-width: 767px) {
+    .row__chips {
+      justify-content: flex-start;
+    }
+  }
+  .chip--level {
+    color: var(--color-accent-ink);
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-rule));
+  }
+</style>

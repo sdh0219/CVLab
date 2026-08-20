@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import NewsIndexView from '../../../components/views/NewsIndexView.astro';
+import { t } from '../../../i18n/ui';
+---
+
+<BaseLayout locale="en" title={t('en', 'nav.news')} compact altPath="/news/">
+  <NewsIndexView locale="en" />
+</BaseLayout>

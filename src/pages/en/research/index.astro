@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ResearchIndexView from '../../../components/views/ResearchIndexView.astro';
+import { t } from '../../../i18n/ui';
+---
+
+<BaseLayout locale="en" title={t('en', 'nav.research')} compact altPath="/research/">
+  <ResearchIndexView locale="en" />
+</BaseLayout>

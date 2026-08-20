@@ -1,0 +1,306 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries, localePath } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const areas = (await getLocaleEntries('researchAreas', locale)).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getLocaleEntries('projects', locale)).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((p) => p.data.featured).slice(0, 3);
+const pubs = (await getLocaleEntries('publications', locale)).sort((a, b) => b.data.year - a.data.year).slice(0, 3);
+const news = (await getLocaleEntries('news', locale)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+const learn = (await getLocaleEntries('resources', locale)).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+---
+
+<section class="rail hero">
+  <p class="hero__tagline">{t(locale, 'home.hero.tagline')}</p>
+  <p class="hero__intro">{t(locale, 'home.hero.intro')}</p>
+  <p class="hero__meta">
+    <a href={localePath(locale, '/research/')}>{t(locale, 'home.research')}</a>
+    <span aria-hidden="true"> / </span>
+    <a href={localePath(locale, '/projects/')}>{t(locale, 'nav.projects')}</a>
+    <span aria-hidden="true"> / </span>
+    <a href={localePath(locale, '/publications/')}>{t(locale, 'nav.publications')}</a>
+  </p>
+</section>
+
+<section class="rail rail__band">
+  <div class="rail__head">
+    <h2 class="rail__title">{t(locale, 'home.research')}</h2>
+    <span class="rail__meta">{areas.length} {locale === 'zh' ? '个方向' : 'areas'}</span>
+  </div>
+  <ul class="arealist">
+    {areas.map((a) => (
+      <li>
+        <a href={localePath(locale, `/research/${a.slug}/`)}>
+          <span class="arealist__title">{locale === 'zh' ? a.data.title : a.data.titleEn}</span>
+          {a.data.summary && <span class="arealist__summary">{a.data.summary}</span>}
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+{featured.length > 0 && (
+  <section class="rail rail__band">
+    <div class="rail__head">
+      <h2 class="rail__title">{t(locale, 'home.featuredProjects')}</h2>
+      <a class="rail__more" href={localePath(locale, '/projects/')}>{t(locale, 'common.viewAll')} →</a>
+    </div>
+    <ul class="projlist">
+      {featured.map((p) => (
+        <li>
+          <a href={localePath(locale, `/projects/${p.slug}/`)}>
+            <span class="projlist__title">{locale === 'zh' ? p.data.title : p.data.titleEn}</span>
+            <span class="projlist__meta">
+              {p.data.source} · {p.data.period} · {t(locale, p.data.status === 'ongoing' ? 'common.status.ongoing' : 'common.status.completed')}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+
+{learn.length > 0 && (
+  <section class="rail rail__band">
+    <div class="rail__head">
+      <h2 class="rail__title">{t(locale, 'home.learn')}</h2>
+      <a class="rail__more" href={localePath(locale, '/learn/')}>{t(locale, 'common.viewAll')} →</a>
+    </div>
+    <ul class="learnlist">
+      {learn.map((r) => {
+        const title = locale === 'zh' ? r.data.title : r.data.titleEn;
+        return (
+          <li>
+            {r.data.externalUrl ? (
+              <a href={r.data.externalUrl} rel="noopener" target="_blank">{title} <span aria-hidden="true">↗</span></a>
+            ) : (
+              <a href={localePath(locale, `/learn/${r.slug}/`)}>{title}</a>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+)}
+
+<section class="rail rail__band">
+  <div class="rail__head">
+    <h2 class="rail__title">{t(locale, 'home.publications')}</h2>
+    <a class="rail__more" href={localePath(locale, '/publications/')}>{t(locale, 'common.viewAll')} →</a>
+  </div>
+  <ul class="publist">
+    {pubs.map((p) => (
+      <li>
+        <span class="publist__year">{p.data.year}</span>
+        <span class="publist__title">{p.data.title}</span>
+        <span class="publist__venue"> — {p.data.venue}{p.data.zone ? `（${p.data.zone}）` : ''}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<section class="rail rail__band">
+  <div class="rail__head">
+    <h2 class="rail__title">{t(locale, 'home.latestNews')}</h2>
+    <a class="rail__more" href={localePath(locale, '/news/')}>{t(locale, 'common.viewAll')} →</a>
+  </div>
+  <ul class="newslist">
+    {news.map((n) => (
+      <li>
+        <a href={localePath(locale, `/news/${n.slug}/`)}>
+          <time datetime={n.data.date.toISOString().slice(0, 10)}>{n.data.date.toISOString().slice(0, 10)}</time>
+          <span>{locale === 'zh' ? n.data.title : n.data.titleEn}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  /* Hero — left-biased, typographic only */
+  .hero {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+  .hero__tagline {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    color: var(--color-accent-ink);
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+  .hero__intro {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    line-height: 1.45;
+    max-width: 30em;
+    margin: var(--space-sm) 0 0;
+    font-weight: 500;
+  }
+  .hero__meta {
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .hero__meta a {
+    text-decoration: none;
+    border-bottom: var(--rule-hair) solid var(--color-rule-strong);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .hero__meta a:hover {
+    border-bottom-color: var(--color-accent);
+  }
+
+  /* Area rail — vertical index, hairline rows */
+  .arealist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .arealist li + li {
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .arealist a {
+    display: grid;
+    gap: var(--space-3xs);
+    padding: var(--space-sm) 0;
+    text-decoration: none;
+  }
+  .arealist__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .arealist a:hover .arealist__title {
+    color: var(--color-accent-ink);
+  }
+  .arealist__summary {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    max-width: var(--measure);
+  }
+
+  /* Featured projects — asymmetric two-col rows */
+  .projlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  }
+  .projlist li:first-child {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 767px) {
+    .projlist {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .projlist a {
+    display: grid;
+    gap: var(--space-3xs);
+    border-top: var(--rule-med) solid var(--color-ink);
+    padding-top: var(--space-xs);
+    text-decoration: none;
+    align-content: start;
+  }
+  .projlist__title {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .projlist a:hover .projlist__title {
+    color: var(--color-accent-ink);
+  }
+  .projlist__meta {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* Publications rail */
+  .publist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .publist li {
+    display: grid;
+    grid-template-columns: 3.2em minmax(0, 1fr) auto;
+    gap: var(--space-sm);
+    align-items: baseline;
+    font-size: var(--text-sm);
+  }
+  .publist__year {
+    font-family: var(--font-mono);
+    color: var(--color-accent-ink);
+    font-size: var(--text-xs);
+  }
+  .publist__venue {
+    color: var(--color-muted);
+  }
+  @media (max-width: 640px) {
+    .publist li {
+      grid-template-columns: 3.2em minmax(0, 1fr);
+    }
+    .publist__venue {
+      grid-column: 2;
+    }
+  }
+
+  /* Learn rail */
+  .learnlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .learnlist a {
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+  .learnlist a:hover {
+    color: var(--color-accent-ink);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--color-accent) 55%, transparent);
+  }
+
+  /* News rail */
+  .newslist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .newslist a {
+    display: flex;
+    gap: var(--space-md);
+    text-decoration: none;
+    font-size: var(--text-sm);
+  }
+  .newslist time {
+    font-family: var(--font-mono);
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+  }
+  .newslist a:hover span:last-child {
+    color: var(--color-accent-ink);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, var(--color-accent) 55%, transparent);
+  }
+</style>

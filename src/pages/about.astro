@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutView from '../components/views/AboutView.astro';
+import { getLocaleEntries } from '../lib/content';
+import { render } from 'astro:content';
+import { t } from '../i18n/ui';
+
+const pi = (await getLocaleEntries('members', 'zh')).find((m) => m.data.role === 'pi');
+const { Content } = pi ? await render(pi) : { Content: null };
+---
+
+<BaseLayout locale="zh" title={t('zh', 'nav.about')} compact altPath="/en/about/">
+  <AboutView locale="zh">
+    {Content && <Fragment slot="pi-bio"><Content /></Fragment>}
+  </AboutView>
+</BaseLayout>

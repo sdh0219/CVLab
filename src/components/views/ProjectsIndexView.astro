@@ -1,0 +1,137 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries, localePath } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const ongoing = (await getLocaleEntries('projects', locale))
+  .sort((a, b) => a.data.order - b.data.order);
+const groups = [
+  { status: 'ongoing' as const, label: t(locale, 'common.status.ongoing') },
+  { status: 'completed' as const, label: t(locale, 'common.status.completed') },
+];
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'nav.projects')}</h2>
+  {groups.map((g) => {
+    const list = ongoing.filter((p) => p.data.status === g.status);
+    if (list.length === 0) return null;
+    return (
+      <section class="group">
+        <h3 class="group__label">{g.label} <span class="group__count">{list.length}</span></h3>
+        <ul class="rows">
+          {list.map((p) => (
+            <li class="row">
+              <div class="row__main">
+                <a class="row__title" href={localePath(locale, `/projects/${p.slug}/`)}>
+                  {locale === 'zh' ? p.data.title : p.data.titleEn}
+                  {p.data.placeholder && <span class="badge-tbd">{t(locale, 'common.example')}</span>}
+                </a>
+                {(p.data.tags.length > 0 || p.data.hasRepro) && (
+                  <p class="row__tags">
+                    {p.data.hasRepro && <span class="chip chip--repro">{t(locale, 'common.repro')}</span>}
+                    {p.data.tags.map((tag) => <span class="chip">{tag}</span>)}
+                  </p>
+                )}
+              </div>
+              <dl class="row__facts">
+                <div>
+                  <dt>{t(locale, 'projects.source')}</dt>
+                  <dd>{locale === 'zh' ? p.data.source : p.data.sourceEn}</dd>
+                </div>
+                <div>
+                  <dt>{t(locale, 'projects.period')}</dt>
+                  <dd>{p.data.period}</dd>
+                </div>
+              </dl>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xl);
+  }
+  .group + .group {
+    margin-top: var(--space-xl);
+  }
+  .group__label {
+    font-size: var(--text-md);
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-sm);
+  }
+  .group__count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-accent-ink);
+    margin-inline-start: var(--space-2xs);
+  }
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  @media (max-width: 767px) {
+    .row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xs);
+    }
+  }
+  .row__title {
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.5;
+  }
+  .row__title:hover {
+    color: var(--color-accent-ink);
+  }
+  .badge-tbd {
+    margin-inline-start: var(--space-2xs);
+    vertical-align: 0.15em;
+  }
+  .row__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: var(--space-2xs) 0 0;
+  }
+  .chip--repro {
+    color: var(--color-accent-ink);
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-rule));
+  }
+  .row__facts {
+    display: grid;
+    gap: var(--space-2xs);
+    margin: 0;
+    font-size: var(--text-sm);
+    align-content: start;
+  }
+  .row__facts dt {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+  }
+  .row__facts dd {
+    margin: 0;
+  }
+</style>

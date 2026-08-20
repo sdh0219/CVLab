@@ -1,0 +1,125 @@
+---
+import { t, type Locale } from '../i18n/ui';
+import { localePath } from '../lib/content';
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description?: string;
+  /** 当前页在另一语言下的路径（用于语言切换） */
+  altPath?: string;
+  /** 内页使用紧凑报头 */
+  compact?: boolean;
+}
+
+const { locale, title, description, altPath, compact = false } = Astro.props;
+
+const navItems = [
+  { key: 'nav.about', path: '/about' },
+  { key: 'nav.people', path: '/people' },
+  { key: 'nav.research', path: '/research' },
+  { key: 'nav.projects', path: '/projects' },
+  { key: 'nav.datasets', path: '/datasets' },
+  { key: 'nav.learn', path: '/learn' },
+  { key: 'nav.publications', path: '/publications' },
+  { key: 'nav.news', path: '/news' },
+] as const;
+
+const current = Astro.url.pathname.replace(/^\/en/, '') || '/';
+const altHref = altPath ?? (locale === 'zh' ? `/en${current === '/' ? '' : current}` : current);
+const fullTitle = locale === 'zh' ? `${title} · ${t('zh', 'site.name')}` : `${title} · ${t('en', 'site.name')}`;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body>
+    <header class="mast" class:list={[{ 'mast--compact': compact }]}>
+      <p class="mast__line">
+        <span>{locale === 'zh' ? '应急管理大学 计算机科学与工程学院' : 'College of Computer Science & Engineering, UEM'}</span>
+        <span aria-hidden="true">·</span>
+        <span>{t(locale, 'home.hero.tagline')}</span>
+        <span aria-hidden="true">·</span>
+        <a href={altHref} hreflang={locale === 'zh' ? 'en' : 'zh'} aria-label={t(locale, 'nav.langSwitchLabel')}>
+          {t(locale, 'nav.langSwitch')}
+        </a>
+      </p>
+      <h1 class="mast__name">
+        <a href={localePath(locale, '/')}>{t(locale, 'site.name')}<span class="en">{locale === 'zh' ? 'YUAN LAB' : '袁静课题组'}</span></a>
+      </h1>
+      <nav class="mast__nav" aria-label={locale === 'zh' ? '主导航' : 'Primary'}>
+        <ul>
+          {navItems.map((item) => {
+            const href = localePath(locale, item.path);
+            const isCurrent = current === item.path;
+            return (
+              <li>
+                <a href={href} aria-current={isCurrent ? 'page' : undefined}>
+                  {t(locale, item.key)}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <details class="mast__disclose">
+        <summary>{t(locale, 'nav.menu')} ＋</summary>
+        <ul>
+          {navItems.map((item) => (
+            <li>
+              <a href={localePath(locale, item.path)} aria-current={current === item.path ? 'page' : undefined}>
+                {t(locale, item.key)}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href={altPath ?? altHref}>{t(locale, 'nav.langSwitch')}</a>
+          </li>
+        </ul>
+      </details>
+      <hr class="mast__rule" aria-hidden="true" />
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="foot">
+      <div class="foot__grid">
+        <div>
+          <p class="foot__wordmark">{t(locale, 'site.name')}</p>
+          <p class="foot__tagline">
+            {t(locale, 'site.nameSub')}
+            <br />
+            {t(locale, 'footer.address')}
+          </p>
+          <p class="foot__tagline">
+            {t(locale, 'common.email')}：
+            <a href="mailto:j-yuan11@tsinghua.org.cn">j-yuan11@tsinghua.org.cn</a>
+          </p>
+        </div>
+        <div>
+          <nav aria-label={t(locale, 'footer.quickLinks')}>
+            <ul class="foot__links">
+              {navItems.map((item) => (
+                <li><a href={localePath(locale, item.path)}>{t(locale, item.key)}</a></li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="foot__colophon">
+        <span>© {new Date().getFullYear()} {t(locale, 'footer.copyright')}</span>
+        <span>{locale === 'zh' ? '网站内容以课题组官方信息为准' : 'Content reflects official lab information'}</span>
+      </div>
+    </footer>
+  </body>
+</html>

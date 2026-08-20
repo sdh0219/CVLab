@@ -1,0 +1,162 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries, localePath } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const pi = (await getLocaleEntries('members', locale)).find((m) => m.data.role === 'pi');
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'nav.about')}</h2>
+  <div class="about-grid">
+    <article class="prose">
+      {locale === 'zh' ? (
+        <>
+          <p class="lede">
+            袁静课题组隶属应急管理大学计算机科学与工程学院，以计算机视觉与人工智能方法为核心工具，长期耕耘人工智能与地球物理交叉领域。
+          </p>
+          <p>
+            课题组围绕电磁卫星数据智能处理、视频测震与地震监测智能化、工业视觉检测三个方向开展研究，先后承担应急管理部重点科技计划、民用航天预研、中国地震局地球物理研究所、中国科学院国家空间科学中心等单位委托的科研项目，成果发表于
+            JGR: Space Physics、IEEE TIM、Remote Sensing 等国内外期刊。
+          </p>
+          <p>
+            课题组重视研究的可复现与开放共享：公开项目将陆续在
+            Gitee 提供代码与数据集，并在本站发布复现指南。欢迎对计算机视觉、深度学习及其地球物理应用感兴趣的同学加入。
+          </p>
+        </>
+      ) : (
+        <>
+          <p class="lede">
+            Yuan Lab is part of the College of Computer Science and Engineering, University of
+            Emergency Management. We work at the intersection of computer vision, AI, and geophysics.
+          </p>
+          <p>
+            Our research spans three areas — intelligent processing of electromagnetic satellite
+            data, video-based seismology and intelligent earthquake monitoring, and industrial
+            vision inspection. The lab has carried out projects commissioned by the Ministry of
+            Emergency Management, the Institute of Geophysics (CEA), the National Space Science
+            Center of CAS, and others, with results published in journals including <em>JGR: Space
+            Physics</em>, <em>IEEE TIM</em>, and <em>Remote Sensing</em>.
+          </p>
+          <p>
+            We value reproducibility and open science: open-sourced projects will gradually release
+            code and datasets on Gitee with reproduction guides on this site. Students interested in
+            computer vision, deep learning, and geophysical applications are welcome to join.
+          </p>
+        </>
+      )}
+      <p>
+        <a href={localePath(locale, '/research/')}>{t(locale, 'nav.research')} →</a>
+      </p>
+    </article>
+
+    {pi && (
+      <aside class="pi-card">
+        {pi.data.photo && (
+          <figure class="pi-card__figure">
+            <img src={pi.data.photo} alt={pi.data.name} loading="lazy" />
+          </figure>
+        )}
+        <h3 class="pi-card__name">{locale === 'zh' ? pi.data.name : pi.data.nameEn}</h3>
+        <p class="pi-card__title">{pi.data.title}</p>
+        <dl class="pi-card__facts">
+          <div>
+            <dt>{t(locale, 'common.email')}</dt>
+            <dd><a href={`mailto:${pi.data.email}`}>{pi.data.email}</a></dd>
+          </div>
+          <div>
+            <dt>{locale === 'zh' ? '研究方向' : 'Interests'}</dt>
+            <dd>{pi.data.interests.join(locale === 'zh' ? ' · ' : ' · ')}</dd>
+          </div>
+        </dl>
+        <a class="pi-card__link" href={localePath(locale, '/people/')}>{t(locale, 'nav.people')} →</a>
+      </aside>
+    )}
+  </div>
+
+  <article class="pi-bio">
+    <h3>{locale === 'zh' ? `${pi!.data.name} · 详细介绍` : `About ${pi!.data.nameEn}`}</h3>
+    <div class="prose">
+      <slot name="pi-bio" />
+    </div>
+  </article>
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xl);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+  @media (max-width: 767px) {
+    .about-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .lede {
+    font-size: var(--text-md);
+    line-height: 1.6;
+  }
+  .pi-card {
+    border: var(--rule-hair) solid var(--color-rule);
+    padding: var(--space-md);
+    display: grid;
+    gap: var(--space-2xs);
+    justify-items: start;
+  }
+  .pi-card__figure {
+    margin: 0;
+    border: var(--rule-hair) solid var(--color-rule);
+  }
+  .pi-card__name {
+    font-size: var(--text-lg);
+    margin: var(--space-2xs) 0 0;
+  }
+  .pi-card__title {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+  .pi-card__facts {
+    margin: var(--space-2xs) 0 0;
+    display: grid;
+    gap: var(--space-2xs);
+    font-size: var(--text-sm);
+  }
+  .pi-card__facts dt {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pi-card__facts dd {
+    margin: 0;
+  }
+  .pi-card__link {
+    font-size: var(--text-sm);
+    color: var(--color-accent-ink);
+    text-decoration: none;
+    border-bottom: var(--rule-hair) solid currentColor;
+  }
+  .pi-bio {
+    margin-top: var(--space-2xl);
+    border-top: var(--rule-hair) solid var(--color-rule);
+    padding-top: var(--space-lg);
+  }
+  .pi-bio__head h3 {
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-md);
+  }
+  .pi-bio .prose {
+    max-width: none;
+  }
+</style>

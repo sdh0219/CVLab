@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LearnIndexView from '../../../components/views/LearnIndexView.astro';
+import { t } from '../../../i18n/ui';
+---
+
+<BaseLayout locale="en" title={t('en', 'nav.learn')} description={t('en', 'learn.intro')} compact altPath="/learn/">
+  <LearnIndexView locale="en" />
+</BaseLayout>

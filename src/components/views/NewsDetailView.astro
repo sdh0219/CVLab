@@ -1,0 +1,66 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { localePath, type LocaleEntry } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+  entry: LocaleEntry<'news'>;
+}
+const { locale, entry } = Astro.props;
+const title = locale === 'zh' ? entry.data.title : entry.data.titleEn;
+---
+
+<section class="rail">
+  <nav class="crumbs" aria-label={locale === 'zh' ? '面包屑' : 'Breadcrumb'}>
+    <a href={localePath(locale, '/news/')}>{t(locale, 'news.title')}</a>
+    <span aria-hidden="true"> / </span>
+    <span>{title}</span>
+  </nav>
+  <article class="post">
+    <header>
+      <time class="post__date" datetime={entry.data.date.toISOString().slice(0, 10)}>
+        {entry.data.date.toISOString().slice(0, 10)}
+      </time>
+      <h2 class="post__title">{title}</h2>
+      {entry.data.tags.length > 0 && (
+        <p class="post__tags">{entry.data.tags.map((tag) => <span class="chip">{tag}</span>)}</p>
+      )}
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</section>
+
+<style>
+  .crumbs {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    margin-bottom: var(--space-sm);
+  }
+  .crumbs a {
+    text-decoration: none;
+  }
+  .post {
+    max-width: var(--measure);
+  }
+  .post__date {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .post__title {
+    font-size: var(--text-2xl);
+    line-height: 1.35;
+    margin: var(--space-2xs) 0 var(--space-sm);
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .post__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: 0 0 var(--space-lg);
+  }
+</style>

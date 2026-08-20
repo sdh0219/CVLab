@@ -1,0 +1,119 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries } from '../../lib/content';
+import { render } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const datasets = (await getLocaleEntries('datasets', locale)).sort((a, b) => b.data.year - a.data.year);
+const rendered = await Promise.all(
+  datasets.map(async (d) => ({ d, Content: (await render(d)).Content })),
+);
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'nav.datasets')}</h2>
+  <p class="page-intro">{t(locale, 'datasets.intro')}</p>
+
+  {rendered.map(({ d, Content }) => (
+    <article class="ds" id={d.slug}>
+      <header class="ds__head">
+        <h3 class="ds__name">
+          {locale === 'zh' ? d.data.name : d.data.nameEn}
+          {d.data.placeholder && <span class="badge-tbd">{t(locale, 'common.example')}</span>}
+        </h3>
+        <dl class="ds__facts">
+          <div><dt>{t(locale, 'datasets.size')}</dt><dd>{d.data.size}</dd></div>
+          <div><dt>{t(locale, 'datasets.format')}</dt><dd>{d.data.format}</dd></div>
+          <div><dt>{t(locale, 'datasets.license')}</dt><dd>{d.data.license}</dd></div>
+          <div><dt>{locale === 'zh' ? '年份' : 'Year'}</dt><dd>{d.data.year}</dd></div>
+        </dl>
+        <p class="ds__links">
+          {d.data.giteeUrl ? (
+            <a class="ds__gitee" href={d.data.giteeUrl} rel="noopener">
+              {t(locale, 'datasets.gitee')} ↗
+            </a>
+          ) : (
+            <span class="ds__gitee-tbd"><span class="badge-tbd">{t(locale, 'common.tbd')}</span> {t(locale, 'datasets.giteeTbd')}</span>
+          )}
+        </p>
+      </header>
+      <details class="ds__detail">
+        <summary>{t(locale, 'common.readMore')}</summary>
+        <div class="prose">
+          <Content />
+        </div>
+      </details>
+    </article>
+  ))}
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xs);
+  }
+  .page-intro {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-xl);
+    max-width: var(--measure);
+  }
+  .ds {
+    border-top: var(--rule-med) solid var(--color-ink);
+    padding-top: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+  .ds__name {
+    font-size: var(--text-lg);
+    margin: 0 0 var(--space-sm);
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .badge-tbd {
+    vertical-align: 0.2em;
+    margin-inline-start: var(--space-2xs);
+  }
+  .ds__facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+    gap: var(--space-sm) var(--space-lg);
+    margin: 0;
+  }
+  .ds__facts dt {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+  }
+  .ds__facts dd {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+  .ds__links {
+    margin: var(--space-sm) 0 0;
+    font-size: var(--text-sm);
+  }
+  .ds__gitee {
+    color: var(--color-accent-ink);
+    text-decoration: none;
+    border-bottom: var(--rule-hair) solid currentColor;
+    white-space: nowrap;
+  }
+  .ds__gitee-tbd {
+    color: var(--color-muted);
+  }
+  .ds__detail {
+    margin-top: var(--space-sm);
+  }
+  .ds__detail summary {
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--color-accent-ink);
+    width: fit-content;
+  }
+  .ds__detail .prose {
+    margin-top: var(--space-sm);
+  }
+</style>

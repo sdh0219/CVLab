@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationsView from '../components/views/PublicationsView.astro';
+import { t } from '../i18n/ui';
+---
+
+<BaseLayout locale="zh" title={t('zh', 'nav.publications')} compact altPath="/en/publications/">
+  <PublicationsView locale="zh" />
+</BaseLayout>

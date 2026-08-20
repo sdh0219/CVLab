@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ResearchDetailView from '../../../components/views/ResearchDetailView.astro';
+import { getLocaleEntries } from '../../../lib/content';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const areas = await getLocaleEntries('researchAreas', 'en');
+  return areas.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout locale="en" title={entry.data.titleEn} compact altPath={`/research/${entry.slug}/`}>
+  <ResearchDetailView locale="en" entry={entry}><Content /></ResearchDetailView>
+</BaseLayout>

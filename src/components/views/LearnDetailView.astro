@@ -1,0 +1,117 @@
+---
+import { t, type Locale, type UiKey } from '../../i18n/ui';
+import { getLocaleEntries, localePath, type LocaleEntry } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+  entry: LocaleEntry<'resources'>;
+}
+const { locale, entry } = Astro.props;
+const d = entry.data;
+
+const levelLabel = d.level ? (t(locale, `learn.level.${d.level}` as UiKey) as string) : '';
+const catLabel = t(locale, `learn.cat.${d.category}` as UiKey);
+const members = await getLocaleEntries('members', locale);
+const author = d.authorRef ? members.find((m) => m.slug === d.authorRef) : undefined;
+const heading = locale === 'zh' ? d.title : d.titleEn;
+---
+
+<section class="rail">
+  <nav class="crumbs" aria-label={locale === 'zh' ? '面包屑' : 'Breadcrumb'}>
+    <a href={localePath(locale, '/learn/')}>{t(locale, 'nav.learn')}</a>
+    <span aria-hidden="true"> / </span>
+    <span>{heading}</span>
+  </nav>
+
+  <header class="head">
+    <h2 class="head__title">
+      {heading}
+      {d.placeholder && <span class="badge-tbd">{t(locale, 'common.example')}</span>}
+    </h2>
+    <p class="head__chips">
+      <span class="chip chip--level">{catLabel}</span>
+      {levelLabel && <span class="chip">{levelLabel}</span>}
+      {d.language && <span class="chip">{t(locale, `learn.lang.${d.language}` as UiKey)}</span>}
+      {d.tags.map((tag) => <span class="chip">{tag}</span>)}
+    </p>
+    {d.externalUrl && (
+      <p class="head__visit">
+        <a href={d.externalUrl} rel="noopener" target="_blank">{t(locale, 'learn.visit')} ↗</a>
+      </p>
+    )}
+    {author && (
+      <p class="head__author">
+        {locale === 'zh' ? '整理：' : 'Curated by '}
+        <a href={localePath(locale, '/people/')}>{locale === 'zh' ? author.data.name : author.data.nameEn}</a>
+      </p>
+    )}
+  </header>
+
+  <div class="prose">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .crumbs {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    margin-bottom: var(--space-sm);
+  }
+  .crumbs a {
+    text-decoration: none;
+  }
+  .head {
+    border-bottom: var(--rule-med) solid var(--color-ink);
+    padding-bottom: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+  .head__title {
+    font-size: var(--text-2xl);
+    line-height: 1.35;
+    margin: 0 0 var(--space-sm);
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .badge-tbd {
+    vertical-align: 0.2em;
+    margin-inline-start: var(--space-2xs);
+  }
+  .head__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: 0;
+  }
+  .chip--level {
+    color: var(--color-accent-ink);
+    border-color: color-mix(in oklch, var(--color-accent) 45%, var(--color-rule));
+  }
+  .head__visit {
+    margin: var(--space-sm) 0 0;
+  }
+  .head__visit a {
+    color: var(--color-accent-ink);
+    text-decoration: none;
+    border-bottom: var(--rule-hair) solid currentColor;
+  }
+  .head__author {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+  .prose {
+    max-width: none;
+  }
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    max-width: var(--measure);
+  }
+  .prose :global(h2) {
+    font-size: var(--text-lg);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-2xs);
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+</style>

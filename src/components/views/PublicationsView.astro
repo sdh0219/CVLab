@@ -1,0 +1,123 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const pubs = (await getLocaleEntries('publications', locale)).sort((a, b) => b.data.year - a.data.year);
+const years = [...new Set(pubs.map((p) => p.data.year))].sort((a, b) => b - a);
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'nav.publications')}</h2>
+  <p class="page-intro">{t(locale, 'publications.intro')}</p>
+
+  {years.map((year) => (
+    <section class="year">
+      <h3 class="year__label">{year}</h3>
+      <ol class="plist">
+        {pubs.filter((p) => p.data.year === year).map((p) => (
+          <li class="pub">
+            <p class="pub__title">
+              {p.data.title}
+              {p.data.correspondingAuthor && (
+                <span class="pub__corr" title={t(locale, 'publications.corresponding')}>✦</span>
+              )}
+            </p>
+            <p class="pub__meta">
+              {p.data.authors.join(', ')}
+            </p>
+            <p class="pub__meta">
+              <em>{p.data.venue}</em>
+              {p.data.zone ? ` · ${p.data.zone}` : ''}
+              {p.data.doi && (
+                <>
+                  {' · '}
+                  <a href={`https://doi.org/${p.data.doi}`} rel="noopener">DOI</a>
+                </>
+              )}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+
+  <p class="note">
+    {locale === 'zh'
+      ? '✦ 表示通讯作者。如需引用，请以期刊正式版本为准。'
+      : '✦ marks the corresponding author. Please cite the version of record.'}
+  </p>
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xs);
+  }
+  .page-intro {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-xl);
+    max-width: var(--measure);
+  }
+  .year {
+    display: grid;
+    grid-template-columns: 4.5em minmax(0, 1fr);
+    gap: var(--space-md);
+    align-items: start;
+  }
+  @media (max-width: 640px) {
+    .year {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xs);
+    }
+  }
+  .year__label {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--color-accent-ink);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .plist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: pub;
+  }
+  .pub {
+    counter-increment: pub;
+    padding: var(--space-sm) 0;
+    border-top: var(--rule-hair) solid var(--color-rule);
+  }
+  .pub::before {
+    content: counter(pub);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    margin-right: var(--space-sm);
+  }
+  .pub__title {
+    display: inline;
+    font-size: var(--text-base);
+    margin: 0;
+  }
+  .pub__corr {
+    color: var(--color-accent);
+    margin-inline-start: var(--space-3xs);
+  }
+  .pub__meta {
+    margin: var(--space-3xs) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    max-width: var(--measure);
+  }
+  .note {
+    margin-top: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+  }
+</style>

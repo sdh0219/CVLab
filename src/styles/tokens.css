@@ -1,0 +1,69 @@
+/* Hallmark · genre: editorial · macrostructure: Ecosystem Index (home) + Long Document (prose) + Index-First (lists) · theme: Newsprint-Academic (self-built · paper oklch(97.5% 0.008 90) · ink oklch(21% 0.012 110) · accent oklch(42% 0.09 160)) · enrichment: none · nav: N6 · footer: Ft1 */
+
+:root {
+  /* ── Color · OKLCH · anchor hue 90–160 (warm paper, pine accent) ── */
+  --color-paper: oklch(97.5% 0.008 90);
+  --color-paper-2: oklch(95% 0.01 90);
+  --color-paper-3: oklch(92.5% 0.012 92);
+  --color-rule: oklch(84% 0.01 95);
+  --color-rule-strong: oklch(70% 0.012 100);
+  --color-neutral: oklch(52% 0.012 120);
+  --color-muted: oklch(40% 0.014 120);
+  --color-ink: oklch(21% 0.012 110);
+  --color-accent: oklch(42% 0.09 160);
+  --color-accent-ink: oklch(33% 0.08 160);
+  --color-focus: oklch(48% 0.12 160);
+
+  /* ── Type · 1.25 scale · CJK-friendly floor ── */
+  --font-display: 'Newsreader', 'Noto Serif SC', ui-serif, serif;
+  --font-body: 'IBM Plex Sans', 'Noto Sans SC', ui-sans-serif, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5rem;
+  --text-xl: 1.875rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: 3.5rem;
+  --text-display: clamp(2.25rem, 4.5vw + 1rem, 4rem);
+
+  /* ── Space · 4pt scale ── */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.37, 0, 0.63, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+
+  /* ── Rules & radius ── */
+  --rule-hair: 1px;
+  --rule-med: 2px;
+  --radius-none: 0;
+  --radius-slight: 2px;
+
+  /* ── Z-scale ── */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* ── Page ── */
+  --page-gutter: clamp(1rem, 4vw, 2.5rem);
+  --measure: 65ch;
+}

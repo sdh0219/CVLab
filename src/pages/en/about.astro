@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AboutView from '../../components/views/AboutView.astro';
+import { getLocaleEntries } from '../../lib/content';
+import { render } from 'astro:content';
+import { t } from '../../i18n/ui';
+
+const pi = (await getLocaleEntries('members', 'en')).find((m) => m.data.role === 'pi');
+const { Content } = pi ? await render(pi) : { Content: null };
+---
+
+<BaseLayout locale="en" title={t('en', 'nav.about')} compact altPath="/about/">
+  <AboutView locale="en">
+    {Content && <Fragment slot="pi-bio"><Content /></Fragment>}
+  </AboutView>
+</BaseLayout>

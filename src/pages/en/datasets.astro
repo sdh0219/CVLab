@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DatasetsIndexView from '../../components/views/DatasetsIndexView.astro';
+import { t } from '../../i18n/ui';
+---
+
+<BaseLayout locale="en" title={t('en', 'nav.datasets')} compact altPath="/datasets/">
+  <DatasetsIndexView locale="en" />
+</BaseLayout>

@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProjectsIndexView from '../../../components/views/ProjectsIndexView.astro';
+import { t } from '../../../i18n/ui';
+---
+
+<BaseLayout locale="en" title={t('en', 'nav.projects')} compact altPath="/projects/">
+  <ProjectsIndexView locale="en" />
+</BaseLayout>

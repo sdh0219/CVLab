@@ -1,0 +1,97 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries, localePath } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const areas = (await getLocaleEntries('researchAreas', locale)).sort((a, b) => a.data.order - b.data.order);
+const projects = await getLocaleEntries('projects', locale);
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'nav.research')}</h2>
+  <p class="page-intro">{t(locale, 'home.researchSub')}</p>
+  <div class="areas">
+    {areas.map((a, i) => {
+      const related = projects.filter((p) => p.data.areaRefs.includes(a.slug));
+      return (
+        <article class:list={['area', { 'area--lead': i === 0 }]}>
+          <h3 class="area__title">
+            <a href={localePath(locale, `/research/${a.slug}/`)}>{locale === 'zh' ? a.data.title : a.data.titleEn}</a>
+          </h3>
+          {a.data.summary && <p class="area__summary">{a.data.summary}</p>}
+          {a.data.keywords.length > 0 && (
+            <p class="area__keywords">
+              {a.data.keywords.map((k) => <span class="chip">{k}</span>)}
+            </p>
+          )}
+          {related.length > 0 && (
+            <p class="area__meta">
+              {locale === 'zh' ? `${related.length} 个相关项目` : `${related.length} related project${related.length > 1 ? 's' : ''}`}
+            </p>
+          )}
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xs);
+  }
+  .page-intro {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-xl);
+  }
+  .areas {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--space-lg);
+  }
+  .area {
+    border-top: var(--rule-med) solid var(--color-ink);
+    padding-top: var(--space-sm);
+    display: grid;
+    gap: var(--space-2xs);
+    align-content: start;
+  }
+  .area--lead {
+    grid-row: span 2;
+  }
+  @media (max-width: 767px) {
+    .areas {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .area__title {
+    font-size: var(--text-lg);
+    margin: 0;
+  }
+  .area__title a {
+    text-decoration: none;
+  }
+  .area__title a:hover {
+    color: var(--color-accent-ink);
+  }
+  .area__summary {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+  }
+  .area__keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: 0;
+  }
+  .area__meta {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+    margin: 0;
+  }
+</style>

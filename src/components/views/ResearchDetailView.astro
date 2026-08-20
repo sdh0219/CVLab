@@ -1,0 +1,105 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries, localePath, type LocaleEntry } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+  entry: LocaleEntry<'researchAreas'>;
+}
+const { locale, entry } = Astro.props;
+
+const projects = (await getLocaleEntries('projects', locale)).filter((p) => p.data.areaRefs.includes(entry.slug));
+const pubs = (await getLocaleEntries('publications', locale)).filter((p) => p.data.projectRefs.includes(entry.slug));
+---
+
+<section class="rail">
+  <nav class="crumbs" aria-label={locale === 'zh' ? '面包屑' : 'Breadcrumb'}>
+    <a href={localePath(locale, '/research/')}>{t(locale, 'nav.research')}</a>
+    <span aria-hidden="true"> / </span>
+    <span>{locale === 'zh' ? entry.data.title : entry.data.titleEn}</span>
+  </nav>
+  <h2 class="page-title">{locale === 'zh' ? entry.data.title : entry.data.titleEn}</h2>
+  {entry.data.keywords.length > 0 && (
+    <p class="keywords">{entry.data.keywords.map((k) => <span class="chip">{k}</span>)}</p>
+  )}
+  <div class="prose">
+    <slot />
+  </div>
+
+  {projects.length > 0 && (
+    <section class="related">
+      <h3>{locale === 'zh' ? '相关项目' : 'Related Projects'}</h3>
+      <ul>
+        {projects.map((p) => (
+          <li>
+            <a href={localePath(locale, `/projects/${p.slug}/`)}>
+              {locale === 'zh' ? p.data.title : p.data.titleEn}
+              <span class="related__meta"> — {p.data.period} · {p.data.source}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {pubs.length > 0 && (
+    <section class="related">
+      <h3>{locale === 'zh' ? '相关论文' : 'Related Publications'}</h3>
+      <ul>
+        {pubs.map((p) => (
+          <li>{p.data.title} — {p.data.venue}, {p.data.year}</li>
+        ))}
+      </ul>
+    </section>
+  )}
+</section>
+
+<style>
+  .crumbs {
+    font-size: var(--text-sm);
+    color: var(--color-muted);
+    margin-bottom: var(--space-sm);
+  }
+  .crumbs a {
+    text-decoration: none;
+  }
+  .crumbs a:hover {
+    text-decoration: underline;
+  }
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-md);
+  }
+  .keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: 0 0 var(--space-lg);
+  }
+  .prose {
+    max-width: none;
+  }
+  .prose :global(p) {
+    max-width: var(--measure);
+  }
+  .related {
+    margin-top: var(--space-xl);
+    border-top: var(--rule-hair) solid var(--color-rule);
+    padding-top: var(--space-md);
+  }
+  .related h3 {
+    font-size: var(--text-lg);
+    margin: 0 0 var(--space-sm);
+  }
+  .related ul {
+    margin: 0;
+    padding-left: 1.1em;
+    display: grid;
+    gap: var(--space-2xs);
+    font-size: var(--text-sm);
+    max-width: var(--measure);
+  }
+  .related__meta {
+    color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+import { t, type Locale } from '../../i18n/ui';
+import { getLocaleEntries } from '../../lib/content';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const members = (await getLocaleEntries('members', locale)).sort((a, b) => a.data.order - b.data.order);
+const roles = ['pi', 'phd', 'master', 'undergrad', 'alumni'] as const;
+const roleLabel: Record<string, string> = {
+  pi: t(locale, 'people.pi'),
+  phd: t(locale, 'people.phd'),
+  master: t(locale, 'people.master'),
+  undergrad: t(locale, 'people.undergrad'),
+  alumni: t(locale, 'people.alumni'),
+};
+---
+
+<section class="rail">
+  <h2 class="page-title">{t(locale, 'nav.people')}</h2>
+  {roles.map((role) => {
+    const group = members.filter((m) => m.data.role === role);
+    return (
+      <section class="group">
+        <h3 class="group__label">{roleLabel[role]}</h3>
+        {group.length > 0 ? (
+          <ul class="cards">
+            {group.map((m) => (
+              <li class="card">
+                {m.data.photo ? (
+                  <figure class="card__figure">
+                    <img src={m.data.photo} alt={m.data.name} loading="lazy" />
+                  </figure>
+                ) : (
+                  <div class="card__figure card__figure--blank" aria-hidden="true"></div>
+                )}
+                <div class="card__body">
+                  <p class="card__name">{locale === 'zh' ? m.data.name : m.data.nameEn}</p>
+                  {m.data.title && <p class="card__title">{m.data.title}</p>}
+                  {m.data.email && (
+                    <p class="card__meta">
+                      <a href={`mailto:${m.data.email}`}>{m.data.email}</a>
+                    </p>
+                  )}
+                  {m.data.interests.length > 0 && (
+                    <p class="card__meta">{m.data.interests.join(' · ')}</p>
+                  )}
+                  {m.data.since && <p class="card__meta">{locale === 'zh' ? `加入于 ${m.data.since}` : `Since ${m.data.since}`}</p>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : role !== 'pi' ? (
+          <p class="group__tbd"><span class="badge-tbd">{t(locale, 'common.tbd')}</span> {t(locale, 'people.tbd')}</p>
+        ) : null}
+      </section>
+    );
+  })}
+</section>
+
+<style>
+  .page-title {
+    font-size: var(--text-2xl);
+    margin: 0 0 var(--space-xl);
+  }
+  .group + .group {
+    margin-top: var(--space-xl);
+    border-top: var(--rule-hair) solid var(--color-rule);
+    padding-top: var(--space-lg);
+  }
+  .group__label {
+    font-size: var(--text-md);
+    color: var(--color-muted);
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    margin: 0 0 var(--space-md);
+  }
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: var(--space-lg);
+  }
+  .card {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: var(--space-md);
+    align-items: start;
+  }
+  @media (max-width: 480px) {
+    .card {
+      grid-template-columns: 72px minmax(0, 1fr);
+    }
+  }
+  .card__figure {
+    margin: 0;
+    aspect-ratio: 1;
+    border: var(--rule-hair) solid var(--color-rule);
+    overflow: hidden;
+  }
+  .card__figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card__figure--blank {
+    background: var(--color-paper-2);
+  }
+  .card__name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin: 0;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .card__title {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    margin: var(--space-3xs) 0 0;
+  }
+  .card__meta {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+    margin: var(--space-3xs) 0 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .group__tbd {
+    color: var(--color-muted);
+    font-size: var(--text-sm);
+  }
+</style>

@@ -17,9 +17,10 @@ order: 310
 | 资源 | 平台 | 链接 | 说明 |
 |------|------|------|------|
 | 源码 + 文档模板 | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD12组_社交媒体求救信息自动提取与定位) | 含完整源码、小数据集、文档模板 |
-| 预训练模型 | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | BERT 模型（可自动下载）+ 训练检查点 |
+| 源码（国内镜像） | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | 国内用户可从 Gitee 克隆源码 |
+| 训练检查点 | GitHub Release | [QD12_bert_ner_checkpoint.bin](https://github.com/sdh0219/CVLab-projects/releases/download/data-v1/QD12_bert_ner_checkpoint.bin) | bert_ner_best/pytorch_model.bin (390MB) |
 
-> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`，进入 `QD12组_社交媒体求救信息自动提取与定位` 目录。BERT 模型会在首次运行时自动从 HuggingFace 下载，训练检查点需从 Gitee 下载后放入 `源码/outputs/checkpoints/` 目录。
+> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`（国内用户可用 `git clone https://gitee.com/susu1843/cvlab_yuan.git`），进入 `QD12组_社交媒体求救信息自动提取与定位` 目录。BERT 预训练模型会在首次运行时自动从 HuggingFace 下载，无需手动操作。训练检查点（390MB）需从 GitHub Release 下载，重命名为 `pytorch_model.bin` 后放入 `源码/outputs/checkpoints/bert_ner_best/` 目录。
 
 > **这份指南写给完全没有编程经验的人。** 只要跟着步骤操作，不需要理解代码就能完成复现。
 >

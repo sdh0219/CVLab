@@ -17,8 +17,9 @@ order: 340
 | 资源 | 平台 | 链接 | 说明 |
 |------|------|------|------|
 | 全部资源 | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD15组_AI应急指挥舱原型设计) | 源码 + 数据集 + 文档模板，仓库内即用 |
+| 全部资源（国内镜像） | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | 国内用户可从 Gitee 克隆，含全部数据 |
 
-> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`，进入 `QD15组_AI应急指挥舱原型设计` 目录。
+> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`（国内用户可用 `git clone https://gitee.com/susu1843/cvlab_yuan.git`），进入 `QD15组_AI应急指挥舱原型设计` 目录。
 
 ---
 

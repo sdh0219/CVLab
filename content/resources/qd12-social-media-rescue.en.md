@@ -17,9 +17,10 @@ order: 310
 | Resource | Platform | Link | Notes |
 |----------|----------|------|-------|
 | Source code + templates | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD12组_社交媒体求救信息自动提取与定位) | Full source, small datasets, templates |
-| Pre-trained models | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | BERT model (auto-downloadable) + training checkpoint |
+| Source (China mirror) | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | Clone from Gitee for faster access in China |
+| Training checkpoint | GitHub Release | [QD12_bert_ner_checkpoint.bin](https://github.com/sdh0219/CVLab-projects/releases/download/data-v1/QD12_bert_ner_checkpoint.bin) | bert_ner_best/pytorch_model.bin (390MB) |
 
-> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git`, enter `QD12组_社交媒体求救信息自动提取与定位` directory. The BERT model auto-downloads from HuggingFace on first run; download the training checkpoint from Gitee and place it in `源码/outputs/checkpoints/`.
+> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git` (or `git clone https://gitee.com/susu1843/cvlab_yuan.git` in China), enter `QD12组_社交媒体求救信息自动提取与定位` directory. The BERT pre-trained model auto-downloads from HuggingFace on first run. Download the training checkpoint (390MB) from GitHub Release, rename to `pytorch_model.bin`, and place in `源码/outputs/checkpoints/bert_ner_best/`.
 
 > **This guide is written for people with absolutely no programming experience.** Just follow the steps—you don't need to understand the code to reproduce the results.
 >

@@ -16,9 +16,10 @@ order: 330
 | Resource | Platform | Link | Notes |
 |----------|----------|------|-------|
 | Source code + templates | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD14组_避开危险路段的救援路径规划) | Full source, small datasets, templates |
-| Large data file | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | osm_sichuan_earthquake/edges.csv (105MB) |
+| Source (China mirror) | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | Clone from Gitee for faster access in China |
+| Road network data | GitHub Release | [QD14_edges.csv](https://github.com/sdh0219/CVLab-projects/releases/download/data-v1/QD14_edges.csv) | osm_sichuan_earthquake/edges.csv (105MB) |
 
-> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git`, enter `QD14组_避开危险路段的救援路径规划` directory. The Sichuan earthquake edges.csv (105MB) must be downloaded from Gitee and placed in `数据集/osm_sichuan_earthquake/`.
+> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git` (or `git clone https://gitee.com/susu1843/cvlab_yuan.git` in China), enter `QD14组_避开危险路段的救援路径规划` directory. The Sichuan earthquake edges.csv (105MB) must be downloaded from GitHub Release and placed in `数据集/osm_sichuan_earthquake/`.
 
 > **This guide is written for people with absolutely no programming experience.** Just follow the steps—you don't need to understand the code to reproduce the results.
 >

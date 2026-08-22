@@ -16,8 +16,9 @@ order: 360
 | Resource | Platform | Link | Notes |
 |----------|----------|------|-------|
 | All resources | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD17组_灾后经济恢复周期预测) | Source + datasets + templates, ready to use |
+| All resources (China mirror) | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | Clone from Gitee for faster access in China, includes all data |
 
-> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git`, enter `QD17组_灾后经济恢复周期预测` directory.
+> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git` (or `git clone https://gitee.com/susu1843/cvlab_yuan.git` in China), enter `QD17组_灾后经济恢复周期预测` directory.
 
 # Post-Disaster Economic Recovery Cycle Prediction · Beginner's Reproduction Guide
 

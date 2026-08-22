@@ -17,9 +17,20 @@ order: 350
 | Resource | Platform | Link | Notes |
 |----------|----------|------|-------|
 | Source code + templates | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD16组_灾后建筑损毁自动识别与GIS空间化评估) | Full source, guide (excludes large data and weights) |
-| Dataset + pre-trained weights | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | xBD satellite imagery (22GB) + best.pth weights (105MB) |
+| Source (China mirror) | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | Clone from Gitee for faster access in China |
+| Inference weights | GitHub Release | [QD16_best.pth](https://github.com/sdh0219/CVLab-projects/releases/download/data-v1/QD16_best.pth) | best.pth (105MB), place in `源码/aline/outputs/checkpoints/` |
+| Dataset (12 volumes) | GitHub Release | [Release page](https://github.com/sdh0219/CVLab-projects/releases/tag/data-v1) | 22GB split archive part00~part11, download all and reassemble |
 
-> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git`, enter `QD16组_灾后建筑损毁自动识别与GIS空间化评估` directory. The dataset and pre-trained weights are large; download from Gitee and place in `数据集/` and `源码/aline/outputs/checkpoints/` respectively.
+> **How to get**:
+> 1. Clone `git clone https://github.com/sdh0219/CVLab-projects.git` (or `git clone https://gitee.com/susu1843/cvlab_yuan.git` in China), enter `QD16组_灾后建筑损毁自动识别与GIS空间化评估` directory.
+> 2. Download `QD16_best.pth` (105MB), place in `源码/aline/outputs/checkpoints/` as `best.pth`.
+> 3. Download all 12 volume files `qd16_dataset.part00` through `qd16_dataset.part11` (~22GB total) from the [Release page](https://github.com/sdh0219/CVLab-projects/releases/tag/data-v1), place them in the same directory.
+> 4. Reassemble and extract (Windows command line, in that directory):
+>    ```
+>    copy /b qd16_dataset.part00+qd16_dataset.part01+qd16_dataset.part02+qd16_dataset.part03+qd16_dataset.part04+qd16_dataset.part05+qd16_dataset.part06+qd16_dataset.part07+qd16_dataset.part08+qd16_dataset.part09+qd16_dataset.part10+qd16_dataset.part11 qd16_dataset.tar
+>    tar -xf qd16_dataset.tar
+>    ```
+>    Place the extracted `数据集/` directory in the project root.
 
 ---
 

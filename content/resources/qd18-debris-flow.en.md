@@ -16,10 +16,10 @@ order: 370
 
 | Resource | Platform | Link | Notes |
 |----------|----------|------|-------|
-| Source code + templates | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD18组_AI辅助山区泥石流零死亡方案) | Full source, templates |
-| Dataset | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | 12-layer GIS raster data + encrypted databases (286MB) |
+| Source + dataset + templates | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD18组_AI辅助山区泥石流零死亡方案) | Full source, dataset (286MB), templates |
+| Source (China mirror) | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | Clone from Gitee for faster access in China, includes all data |
 
-> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git`, enter `QD18组_AI辅助山区泥石流零死亡方案` directory. The dataset (286MB) can be downloaded from Gitee and placed in `数据集/`.
+> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git` (or `git clone https://gitee.com/susu1843/cvlab_yuan.git` in China), enter `QD18组_AI辅助山区泥石流零死亡方案` directory. The dataset is included in the repository, no separate download needed.
 
 # AI-Assisted Mountain Debris Flow Zero-Casualty Solution · Beginner's Reproduction Guide
 

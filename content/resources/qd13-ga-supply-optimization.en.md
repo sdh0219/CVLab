@@ -16,8 +16,9 @@ order: 320
 | Resource | Platform | Link | Notes |
 |----------|----------|------|-------|
 | All resources | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD13组_基于遗传算法的救援物资分配优化) | Source + datasets + templates, ready to use |
+| All resources (China mirror) | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | Clone from Gitee for faster access in China, includes all data |
 
-> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git`, enter `QD13组_基于遗传算法的救援物资分配优化` directory.
+> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git` (or `git clone https://gitee.com/susu1843/cvlab_yuan.git` in China), enter `QD13组_基于遗传算法的救援物资分配优化` directory.
 
 > **This guide is written for people with absolutely no programming experience.** Just follow the steps—you don't need to understand the code to reproduce the results.
 >

@@ -17,9 +17,20 @@ order: 350
 | 资源 | 平台 | 链接 | 说明 |
 |------|------|------|------|
 | 源码 + 文档模板 | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD16组_灾后建筑损毁自动识别与GIS空间化评估) | 含完整源码、复现指南（不含大数据集和权重） |
-| 数据集 + 预训练权重 | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | xBD 卫星影像数据集 (22GB) + best.pth 权重 (105MB) |
+| 源码（国内镜像） | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | 国内用户可从 Gitee 克隆源码 |
+| 推理权重 | GitHub Release | [QD16_best.pth](https://github.com/sdh0219/CVLab-projects/releases/download/data-v1/QD16_best.pth) | best.pth (105MB)，放入 `源码/aline/outputs/checkpoints/` |
+| 数据集（12卷） | GitHub Release | [Release 页面](https://github.com/sdh0219/CVLab-projects/releases/tag/data-v1) | 22GB 分卷文件 part00~part11，需全部下载后合并解压 |
 
-> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`，进入 `QD16组_灾后建筑损毁自动识别与GIS空间化评估` 目录。数据集和预训练权重文件较大，需从 Gitee 下载后分别放入 `数据集/` 和 `源码/aline/outputs/checkpoints/` 目录。
+> **获取方式**：
+> 1. 克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`（国内用户可用 `git clone https://gitee.com/susu1843/cvlab_yuan.git`），进入 `QD16组_灾后建筑损毁自动识别与GIS空间化评估` 目录。
+> 2. 下载 `QD16_best.pth`（105MB），放入 `源码/aline/outputs/checkpoints/` 目录并命名为 `best.pth`。
+> 3. 从 [Release 页面](https://github.com/sdh0219/CVLab-projects/releases/tag/data-v1) 下载全部 12 个分卷文件 `qd16_dataset.part00` ~ `qd16_dataset.part11`（共约 22GB），放在同一目录下。
+> 4. 合并并解压（Windows 命令行，在该目录下执行）：
+>    ```
+>    copy /b qd16_dataset.part00+qd16_dataset.part01+qd16_dataset.part02+qd16_dataset.part03+qd16_dataset.part04+qd16_dataset.part05+qd16_dataset.part06+qd16_dataset.part07+qd16_dataset.part08+qd16_dataset.part09+qd16_dataset.part10+qd16_dataset.part11 qd16_dataset.tar
+>    tar -xf qd16_dataset.tar
+>    ```
+>    解压后得到的 `数据集/` 目录放入项目根目录即可。
 
 ---
 
@@ -190,7 +201,7 @@ set FORCE_CPU=1
 | 报错信息 | 原因 | 解决方案 |
 |---|---|---|
 | `'python' 不是内部或外部命令` | Python 未安装或未加入 PATH | 重新安装 Python，勾选 "Add Python to PATH" |
-| `best.pth 不存在` | 预训练权重文件缺失 | 从项目提供者处获取 best.pth，放到 `outputs\checkpoints\` 目录 |
+| `best.pth 不存在` | 预训练权重文件缺失 | 从 [GitHub Release](https://github.com/sdh0219/CVLab-projects/releases/download/data-v1/QD16_best.pth) 下载 best.pth，放到 `outputs\checkpoints\` 目录 |
 | `CUDA out of memory` | GPU 显存不足 | 一键脚本已默认 CPU 模式；手动运行时确保 `set FORCE_CPU=1` |
 | `cv2.error` 或 `NoneType` | 中文路径问题 | 把项目移到纯英文路径（如 `D:\projects\16group\`） |
 | `ModuleNotFoundError: No module named 'torch'` | PyTorch 未安装 | 重新双击 `一键运行.bat`，或手动执行第四章的安装命令 |

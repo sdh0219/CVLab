@@ -16,9 +16,10 @@ order: 330
 | 资源 | 平台 | 链接 | 说明 |
 |------|------|------|------|
 | 源码 + 文档模板 | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD14组_避开危险路段的救援路径规划) | 含完整源码、小数据集、文档模板 |
-| 大数据文件 | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | osm_sichuan_earthquake/edges.csv (105MB) |
+| 源码（国内镜像） | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | 国内用户可从 Gitee 克隆源码 |
+| 路网数据 | GitHub Release | [QD14_edges.csv](https://github.com/sdh0219/CVLab-projects/releases/download/data-v1/QD14_edges.csv) | osm_sichuan_earthquake/edges.csv (105MB) |
 
-> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`，进入 `QD14组_避开危险路段的救援路径规划` 目录。四川地震场景的 edges.csv 文件较大（105MB），需从 Gitee 下载后放入 `数据集/osm_sichuan_earthquake/` 目录。
+> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`（国内用户可用 `git clone https://gitee.com/susu1843/cvlab_yuan.git`），进入 `QD14组_避开危险路段的救援路径规划` 目录。四川地震场景的 edges.csv 文件较大（105MB），需从 GitHub Release 下载后放入 `数据集/osm_sichuan_earthquake/` 目录。
 
 > **这份指南写给完全没有编程经验的人。** 只要跟着步骤操作，不需要理解代码就能完成复现。
 >

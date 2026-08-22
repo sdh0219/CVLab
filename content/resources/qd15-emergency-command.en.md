@@ -17,8 +17,9 @@ order: 340
 | Resource | Platform | Link | Notes |
 |----------|----------|------|-------|
 | All resources | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD15组_AI应急指挥舱原型设计) | Source + datasets + templates, ready to use |
+| All resources (China mirror) | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | Clone from Gitee for faster access in China, includes all data |
 
-> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git`, enter `QD15组_AI应急指挥舱原型设计` directory.
+> **How to get**: Clone `git clone https://github.com/sdh0219/CVLab-projects.git` (or `git clone https://gitee.com/susu1843/cvlab_yuan.git` in China), enter `QD15组_AI应急指挥舱原型设计` directory.
 
 ---
 

@@ -16,10 +16,10 @@ order: 370
 
 | 资源 | 平台 | 链接 | 说明 |
 |------|------|------|------|
-| 源码 + 文档模板 | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD18组_AI辅助山区泥石流零死亡方案) | 含完整源码、文档模板 |
-| 数据集 | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | 12 层 GIS 栅格数据 + 加密数据库 (286MB) |
+| 源码 + 数据集 + 文档模板 | GitHub | [CVLab-projects](https://github.com/sdh0219/CVLab-projects/tree/main/QD18组_AI辅助山区泥石流零死亡方案) | 含完整源码、数据集（286MB）、文档模板 |
+| 源码（国内镜像） | Gitee | [cvlab_yuan](https://gitee.com/susu1843/cvlab_yuan) | 国内用户可从 Gitee 克隆，含全部数据集 |
 
-> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`，进入 `QD18组_AI辅助山区泥石流零死亡方案` 目录。数据集较大（286MB），可从 Gitee 下载后放入 `数据集/` 目录。
+> **获取方式**：克隆仓库 `git clone https://github.com/sdh0219/CVLab-projects.git`（国内用户可用 `git clone https://gitee.com/susu1843/cvlab_yuan.git`），进入 `QD18组_AI辅助山区泥石流零死亡方案` 目录。数据集已包含在仓库中，无需额外下载。
 
 # AI辅助山区泥石流零死亡方案 · 零基础复现指南
 

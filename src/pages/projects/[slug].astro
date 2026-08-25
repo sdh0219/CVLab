@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectDetailView from '../../components/views/ProjectDetailView.astro';
-import { getLocaleEntries } from '../../lib/content';
+import { getPublicProjects } from '../../lib/content';
 import { render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const projects = await getLocaleEntries('projects', 'zh');
+  const projects = await getPublicProjects('zh');
   return projects.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
 }
 

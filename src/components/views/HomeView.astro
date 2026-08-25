@@ -1,6 +1,6 @@
 ---
 import { t, type Locale } from '../../i18n/ui';
-import { getLocaleEntries, localePath } from '../../lib/content';
+import { getLocaleEntries, getPublicProjects, localePath } from '../../lib/content';
 
 interface Props {
   locale: Locale;
@@ -8,7 +8,7 @@ interface Props {
 const { locale } = Astro.props;
 
 const areas = (await getLocaleEntries('researchAreas', locale)).sort((a, b) => a.data.order - b.data.order);
-const projects = (await getLocaleEntries('projects', locale)).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getPublicProjects(locale)).sort((a, b) => a.data.order - b.data.order);
 const featured = projects.filter((p) => p.data.featured).slice(0, 3);
 const pubs = (await getLocaleEntries('publications', locale)).sort((a, b) => b.data.year - a.data.year).slice(0, 3);
 const news = (await getLocaleEntries('news', locale)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);

@@ -1,7 +1,7 @@
 ---
 title: 电磁卫星数据智能处理
 titleEn: Intelligent Processing of Electromagnetic Satellite Data
-summary: Intelligent detection, extraction and morphology analysis of lightning whistlers and DX signals from Zhangheng-1 (CSES) satellite observations.
+summary: Intelligent detection, extraction and morphology analysis of lightning whistlers and other plasma waves from Zhangheng-1 (CSES) satellite observations.
 keywords:
   - Zhangheng-1 (CSES)
   - lightning whistlers
@@ -16,7 +16,6 @@ Electromagnetic satellites produce massive in-situ plasma wave observations, amo
 
 - **Whistler detection & classification**: weak-whistler detection, wider-band whistler detection, and a Transformer-based architecture for joint detection and classification — published in *JGR: Space Physics*, *IEEE TIM*, *Remote Sensing*, and *Radio Science*.
 - **Whistler morphology analysis**: extraction and morphology analysis of whistlers based on CSES data.
-- **Other signal extraction**: the civil-aerospace pre-research project on intelligent DX-signal extraction from the Zhangheng-1 satellite.
 - **Analysis software**: a wave-vector analysis software package for Zhangheng-1 data.
 
 See the Publications page for the full list.

@@ -3,7 +3,7 @@ export type Locale = 'zh' | 'en';
 export const ui = {
   zh: {
     'site.name': '袁静课题组',
-    'site.nameSub': 'Yuan Lab · 应急管理大学 计算机科学与工程学院',
+    'site.nameSub': 'Yuan Lab · 应急管理大学 计算机与信息安全学院',
     'nav.home': '首页',
     'nav.about': '关于我们',
     'nav.people': '成员',
@@ -84,13 +84,13 @@ export const ui = {
     'footer.contact': '联系方式',
     'footer.address': '河北省三河市燕郊高新区 学院街大街 467 号（应急管理大学）',
     'footer.quickLinks': '快速导航',
-    'footer.copyright': '袁静课题组 · 应急管理大学计算机科学与工程学院',
+    'footer.copyright': '袁静课题组 · 应急管理大学计算机与信息安全学院',
     'notfound.title': '页面不存在',
     'notfound.back': '返回首页',
   },
   en: {
     'site.name': 'Yuan Lab',
-    'site.nameSub': 'College of Computer Science & Engineering, UEM',
+    'site.nameSub': 'College of Computer and Information Security, UEM',
     'nav.home': 'Home',
     'nav.about': 'About',
     'nav.people': 'People',
@@ -173,7 +173,7 @@ export const ui = {
     'footer.contact': 'Contact',
     'footer.address': '467 Xueyuan Street, Yanjiao, Sanhe, Hebei, China (UEM)',
     'footer.quickLinks': 'Quick Links',
-    'footer.copyright': 'Yuan Lab · College of Computer Science & Engineering, UEM',
+    'footer.copyright': 'Yuan Lab · College of Computer and Information Security, UEM',
     'notfound.title': 'Page not found',
     'notfound.back': 'Back to home',
   },

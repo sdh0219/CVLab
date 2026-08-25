@@ -26,6 +26,15 @@ export async function getLocaleEntries<C extends CollectionKey>(
     });
 }
 
+/**
+ * 可对外展示的项目：仅结题项目（在研项目因保密要求暂不展示，
+ * 结题后把内容文件 status 改为 completed 即自动恢复）。
+ */
+export async function getPublicProjects(locale: Locale): Promise<LocaleEntry<'projects'>[]> {
+  const projects = await getLocaleEntries('projects', locale);
+  return projects.filter((p) => p.data.status !== 'ongoing');
+}
+
 /** zh / en 同 slug 配对。 */
 export async function getPairedEntries<C extends CollectionKey>(collection: C) {
   const all = await getCollection(collection);

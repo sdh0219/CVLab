@@ -3,13 +3,12 @@ title: 视频测震与地震监测智能化
 titleEn: Video-based Seismology & Intelligent Earthquake Monitoring
 summary: >-
   Augmenting earthquake monitoring with computer vision — virtual seismographs
-  from ordinary video, AI-based animal behavior observation, and LLM-driven
-  strong-motion monitoring.
+  from ordinary video, AI-based animal behavior observation, and damage &
+  casualty prediction.
 keywords:
   - video seismology
   - virtual seismograph
   - animal behavior recognition
-  - large language models
   - earthquake prediction
 order: 2
 ---
@@ -18,9 +17,8 @@ Seismic monitoring has long depended on dedicated instruments, creating a tensio
 
 ## What we do
 
-- **Virtual seismographs from video**: video-based virtual seismograph methods and a fully-automated machine-vision smart seismograph (*IEEE GRSL*, *Sensors*); the ongoing project "AI-based video seismology models and engineering deployment" funded by the Institute of Geophysics, CEA.
-- **Intelligent animal behavior observation**: an AI-based macro animal behavior observation and analysis system (Liaoning Earthquake Administration), with a survey published in *Chinese Journal of Geophysics*.
-- **LLM-driven strong-motion monitoring**: a key S&T program of the Ministry of Emergency Management on LLM-driven intelligent strong-motion monitoring equipment and systems.
+- **Virtual seismographs from video**: video-based virtual seismograph methods and a fully-automated machine-vision smart seismograph (*IEEE GRSL*, *Sensors*).
+- **Intelligent animal behavior observation**: an AI-based macro animal behavior observation and analysis system, with a survey published in *Chinese Journal of Geophysics*.
 - **Damage & casualty prediction**: video-based building damage prediction and Bayesian machine-learning earthquake casualty prediction.
 
 ## Selected publications

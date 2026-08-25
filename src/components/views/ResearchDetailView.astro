@@ -1,6 +1,6 @@
 ---
 import { t, type Locale } from '../../i18n/ui';
-import { getLocaleEntries, localePath, type LocaleEntry } from '../../lib/content';
+import { getLocaleEntries, getPublicProjects, localePath, type LocaleEntry } from '../../lib/content';
 
 interface Props {
   locale: Locale;
@@ -8,7 +8,7 @@ interface Props {
 }
 const { locale, entry } = Astro.props;
 
-const projects = (await getLocaleEntries('projects', locale)).filter((p) => p.data.areaRefs.includes(entry.slug));
+const projects = (await getPublicProjects(locale)).filter((p) => p.data.areaRefs.includes(entry.slug));
 const pubs = (await getLocaleEntries('publications', locale)).filter((p) => p.data.projectRefs.includes(entry.slug));
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 电磁卫星数据智能处理
 titleEn: Intelligent Processing of Electromagnetic Satellite Data
-summary: 面向张衡一号（CSES）电磁卫星观测数据，研究闪电哨声波、DX 信号等的智能检测、提取与形态分析。
+summary: 面向张衡一号（CSES）电磁卫星观测数据，研究闪电哨声波等等离子体波的智能检测、提取与形态分析。
 keywords:
   - 张衡一号卫星
   - 闪电哨声波
@@ -18,7 +18,6 @@ order: 1
 
 - **哨声波检测与分类**：提出弱哨声波检测、更宽频带哨声波探测等方法，并引入 Transformer 架构实现检测与分类一体化；成果发表于 *JGR: Space Physics*、*IEEE TIM*、*Remote Sensing*、*Radio Science* 等期刊。
 - **哨声波形态分析**：基于 CSES 数据开展哨声波提取与形态分析，支撑空间物理研究。
-- **其他信号智能提取**：承担民用航天预研项目"基于张衡卫星的 DX 信号智能提取技术"。
 - **数据分析软件**：研制张衡卫星波矢量算法分析软件。
 
 ## 相关论文（部分）

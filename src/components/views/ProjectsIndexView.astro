@@ -1,16 +1,15 @@
 ---
 import { t, type Locale } from '../../i18n/ui';
-import { getLocaleEntries, localePath } from '../../lib/content';
+import { getPublicProjects, localePath } from '../../lib/content';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 
-const ongoing = (await getLocaleEntries('projects', locale))
+const ongoing = (await getPublicProjects(locale))
   .sort((a, b) => a.data.order - b.data.order);
 const groups = [
-  { status: 'ongoing' as const, label: t(locale, 'common.status.ongoing') },
   { status: 'completed' as const, label: t(locale, 'common.status.completed') },
 ];
 ---

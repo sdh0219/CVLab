@@ -1,7 +1,7 @@
 ---
 title: "Project Practice · Start Here"
 titleEn: "Project Practice · Start Here"
-summary: "How to use the 11 practice projects: reading the guides, downloading, troubleshooting, and a suggested learning order. Spend 10 minutes here before starting."
+summary: "How to use the 20 practice projects (9 beginner + 11 intermediate): reading the guides, downloading, troubleshooting, and a suggested learning order. Spend 10 minutes here before starting."
 category: practice
 tags:
   - guide

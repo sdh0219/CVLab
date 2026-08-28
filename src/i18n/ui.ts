@@ -65,6 +65,7 @@ export const ui = {
     'publications.corresponding': '通讯作者',
     'news.title': '新闻动态',
     'learn.intro': '课题组整理的课程、教程、工具资源与可复现项目：从入门课程到项目复现的分步实践指南。',
+    'learn.featured': '重点推荐',
     'learn.cat.course': '课程',
     'learn.cat.setup': '环境配置',
     'learn.cat.tutorial': '技术教程',
@@ -154,6 +155,7 @@ export const ui = {
     'news.title': 'News',
     'learn.intro':
       'Courses, tutorials, tools and reproducible projects curated by the lab — from introductory courses to step-by-step project reproduction guides.',
+    'learn.featured': 'Recommended',
     'learn.cat.course': 'Courses',
     'learn.cat.setup': 'Setup Guides',
     'learn.cat.tutorial': 'Tutorials',

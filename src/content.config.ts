@@ -122,6 +122,7 @@ const resources = defineCollection({
     authorRef: z.string().optional(),
     language: z.enum(['zh', 'en', 'bilingual']).optional(),
     placeholder: z.boolean().default(false),
+    featured: z.boolean().default(false),
     order: z.number().default(100),
   }),
 });
